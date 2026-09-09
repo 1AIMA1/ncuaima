@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>工作台 - 园区后台管理系统</title>
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+    <div class="layout">
+
+        <!-- 左侧侧边栏（公共） -->
+        <aside class="sidebar">
+            <div class="logo-bar">
+                <span class="logo">HEIMAZS</span>
+            </div>
+            <nav class="menu">
+                <div class="menu-item" data-key="index" data-href="index.html">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">工作台</span>
+                </div>
+
+                <div class="menu-item has-sub">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">园区管理</span>
+                    <span class="menu-arrow"></span>
+                </div>
+                <ul class="submenu"></ul>
+
+                <div class="menu-item has-sub">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">行车管理</span>
+                    <span class="menu-arrow"></span>
+                </div>
+                <ul class="submenu">
+                    <li class="submenu-item" data-href="#">区域管理</li>
+                    <li class="submenu-item" data-key="monthCard" data-href="monthCard.html">月卡管理</li>
+                    <li class="submenu-item" data-href="#">停车缴费管理</li>
+                    <li class="submenu-item" data-href="#">计费规则管理</li>
+                </ul>
+
+                <div class="menu-item has-sub">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">物业费管理</span>
+                    <span class="menu-arrow"></span>
+                </div>
+                <ul class="submenu"></ul>
+
+                <div class="menu-item has-sub">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">一体杆管理</span>
+                    <span class="menu-arrow"></span>
+                </div>
+                <ul class="submenu"></ul>
+
+                <div class="menu-item has-sub">
+                    <span class="menu-icon"></span>
+                    <span class="menu-text">系统管理</span>
+                    <span class="menu-arrow"></span>
+                </div>
+                <ul class="submenu"></ul>
+            </nav>
+        </aside>
+
+        <!-- 右侧主区 -->
+        <section class="main">
+            <header class="header">
+                <span class="user-info">黑马管理员</span>
+            </header>
+
+            <div class="content">
+                <!-- 首页两栏布局：左大区 + 右小区 -->
+                <div class="home-content">
+
+                    <!-- 左大区：园区数据 + 两个快捷入口占位 -->
+                    <div class="main-left">
+                        <!-- 园区数据：4 张统计卡片 -->
+                        <div class="section-card">
+                            <div class="section-title">园区数据</div>
+                            <div class="stat-grid">
+                                <div class="stat-card">
+                                    <div class="stat-label">年度累计收费（元）</div>
+                                    <div class="stat-value" id="stat-totalRevenue">0</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">入驻企业总数（个）</div>
+                                    <div class="stat-value" id="stat-enterpriseCount">0</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">月卡车辆总数（辆）</div>
+                                    <div class="stat-value" id="stat-carCount">0</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">一体杆总数（台）</div>
+                                    <div class="stat-value" id="stat-deviceCount">0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 快捷入口：占位/扩展 -->
+                        <div class="section-card">
+                            <div class="card-title">快捷入口</div>
+                            <div class="placeholder">（扩展占位：可放置业务快捷操作）</div>
+                        </div>
+
+                        <!-- 快捷入口：占位/扩展 -->
+                        <div class="section-card">
+                            <div class="card-title">快捷入口</div>
+                            <div class="placeholder">（扩展占位：可放置业务快捷操作）</div>
+                        </div>
+                    </div>
+
+                    <!-- 右小区：两个快捷入口 -->
+                    <div class="main-right">
+                        <!-- 快捷入口：4 个图标入口 -->
+                        <div class="section-card">
+                            <div class="card-title">快捷入口</div>
+                            <div class="entry-grid">
+                                <div class="entry-item">
+                                    <div class="entry-icon">+</div>
+                                    <div class="entry-name">添加企业</div>
+                                </div>
+                                <div class="entry-item">
+                                    <div class="entry-icon">@</div>
+                                    <div class="entry-name">员工管理</div>
+                                </div>
+                                <div class="entry-item">
+                                    <div class="entry-icon">#</div>
+                                    <div class="entry-name">添加楼单</div>
+                                </div>
+                                <div class="entry-item">
+                                    <div class="entry-icon">%</div>
+                                    <div class="entry-name">数据大屏</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 快捷入口：占位 -->
+                        <div class="section-card">
+                            <div class="card-title">快捷入口</div>
+                            <div class="placeholder">（扩展占位）</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 先引入全局数据层，确保业务脚本可直接使用 DataStore -->
+    <script src="js/dataStore.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
