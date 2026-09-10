@@ -178,7 +178,7 @@ ul {
     border-bottom: 1px solid #ececec;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: right;
     padding: 0 24px;
     flex-shrink: 0;
 }
@@ -246,7 +246,7 @@ ul {
 }
 
 .btn-danger {
-    background: #e24b4a;
+    background: #df3737;
     border-color: #e24b4a;
     color: #ffffff;
 }
@@ -275,6 +275,7 @@ ul {
     display: flex;
     gap: 12px;
     align-items: flex-start;
+    background: #295393;
 }
 
 /* 左大区 */
@@ -291,9 +292,9 @@ ul {
 
 /* 园区数据卡片 */
 .section-card {
-    background: #ffffff;
+    background: #fdfdfd;
     border-radius: 4px;
-    padding: 16px 20px;
+    padding: 16px 10px;
     margin-bottom: 12px;
 }
 

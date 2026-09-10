@@ -196,7 +196,7 @@
         setText('v-startDate', item.startDate);
         setText('v-endDate', item.endDate);
         setText('v-payAmount', item.payAmount + ' 元');
-        document.getElementById('viewModal').style.display = 'flex';
+        openModal('viewModal');
     }
 
     function setText(id, val) {
@@ -235,10 +235,24 @@
         document.getElementById('m-startDate').value = item.startDate || '';
         document.getElementById('m-endDate').value = item.endDate || '';
         document.getElementById('m-payAmount').value = item.payAmount;
-        document.getElementById('m-remainDay').value = item.remainDay;
         document.getElementById('editErr').textContent = '';
 
-        document.getElementById('editModal').style.display = 'flex';
+        // 依据当前起止日期刷新剩余天数预览
+        previewRemain();
+
+        openModal('editModal');
+    }
+
+    /** 实时预览剩余天数：读开始/结束日期，齐全时用 DataStore 计算并回显 */
+    function previewRemain() {
+        var start = document.getElementById('m-startDate').value;
+        var end = document.getElementById('m-endDate').value;
+        var box = document.getElementById('m-remainDay');
+        if (start && end) {
+            box.value = DataStore.calcRemainDay(start, end);
+        } else {
+            box.value = '';
+        }
     }
 
     function setReadonly(id, ro) {
@@ -246,10 +260,54 @@
         el.disabled = ro;
     }
 
-    /** 关闭指定弹窗 */
+    /** ============================================================
+     *  通用弹窗交互（打开 / 关闭 / 滚动锁定 / Esc / 计数）
+     *  供查看、编辑、续费三类弹窗共用
+     *  ============================================================ */
+
+    var openModalCount = 0;   // 当前打开弹窗数，归零时恢复背景滚动
+
+    /** 打开弹窗：显示遮罩 + 锁定背景滚动 */
+    function openModal(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = 'flex';
+        openModalCount += 1;
+        lockScroll();
+    }
+
+    /** 关闭弹窗：隐藏遮罩，全部关闭后恢复背景滚动 */
     function closeModal(id) {
         var el = document.getElementById(id);
-        if (el) el.style.display = 'none';
+        if (!el) return;
+        el.style.display = 'none';
+        if (openModalCount > 0) openModalCount -= 1;
+        if (openModalCount <= 0) unlockScroll();
+    }
+
+    /** 记录滚动位置并锁定背景滚动，避免弹窗出现时页面跳动 */
+    var savedScrollTop = 0;
+    function lockScroll() {
+        if (document.body.style.overflow === 'hidden') return; // 已锁定
+        savedScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        document.body.style.overflow = 'hidden';
+    }
+
+    /** 解除背景滚动锁定并还原滚动位置 */
+    function unlockScroll() {
+        document.body.style.overflow = '';
+        window.scrollTo(0, savedScrollTop);
+    }
+
+    /** 关闭当前最上层的已打开弹窗（供 Esc 键调用） */
+    function closeTopModal() {
+        var masks = document.querySelectorAll('.modal-mask');
+        for (var i = masks.length - 1; i >= 0; i--) {
+            if (masks[i].style.display !== 'none') {
+                closeModal(masks[i].id);
+                return;
+            }
+        }
     }
 
     /** 保存编辑/续费 */
@@ -365,18 +423,36 @@
                 closeModal(this.getAttribute('data-close'));
             });
         }
-        // 点遮罩空白区关闭（事件目标为遮罩本身时）
+        // 点遮罩空白区关闭（事件目标为遮罩本身时，走统一 closeModal 以正确解锁滚动）
         var masks = document.querySelectorAll('.modal-mask');
         for (var j = 0; j < masks.length; j++) {
             masks[j].addEventListener('click', function (e) {
-                if (e.target === this) this.style.display = 'none';
+                if (e.target === this) closeModal(this.id);
             });
         }
+
+        // Esc 键关闭当前最上层弹窗
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                closeTopModal();
+            }
+        });
     }
 
     /** 保存编辑/续费 */
     function bindSave() {
         document.getElementById('btn-saveEdit').addEventListener('click', saveEdit);
+        bindRemainPreview();
+    }
+
+    /** 编辑弹窗内日期联动：起止日期变化即实时预览剩余天数（一次性绑定，弹窗 DOM 常驻） */
+    function bindRemainPreview() {
+        var start = document.getElementById('m-startDate');
+        var end = document.getElementById('m-endDate');
+        ['change', 'input'].forEach(function (evt) {
+            start.addEventListener(evt, previewRemain);
+            end.addEventListener(evt, previewRemain);
+        });
     }
 
     /** 初始化 */
