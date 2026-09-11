@@ -105,7 +105,7 @@ ul {
 
 .menu-item.active .menu-icon::before,
 .menu-item:hover .menu-icon::before {
-    background: #185fa5;
+    background: #341ebe;
 }
 
 /* 菜单文字 */
@@ -132,7 +132,7 @@ ul {
 /* 二级菜单（默认隐藏，父级展开后显示） */
 .submenu {
     display: none;
-    background: #fafbfc;
+    background: #ffffff;
 }
 
 .menu-item.expanded + .submenu {
@@ -275,7 +275,7 @@ ul {
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    background: #295393;
+    background: #ece8e8;
 }
 
 /* 左大区 */
@@ -292,7 +292,7 @@ ul {
 
 /* 园区数据卡片 */
 .section-card {
-    background: #fdfdfd;
+    background: #fefefe;
     border-radius: 4px;
     padding: 16px 10px;
     margin-bottom: 12px;
